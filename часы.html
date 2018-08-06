@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <title>часы</title>
+<div align="center">
+	<script>	
+		function go(){
+			window.timerId = window.setInterval(timer, 500);
+		}
+		function timer(){
+			var clock = document.getElementById('clock');
+			var date = new Date();
+			clock.innerHTML = addZero(date.getHours())+':'+addZero(date.getMinutes())+':'+addZero(date.getSeconds());
+		}
+		function addZero(num){
+			if(num <=9) return '0'+num;
+				else return num;
+		}
+	</script>
+	<body onload="go()">
+	<div id="wrapper">
+		<p id="clock">15:23:40</p>
+	</div>
+	<iframe width="560" height="255" src="https://www.youtube.com/embed/gu9_m0vm7fM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	</body >
+</html>

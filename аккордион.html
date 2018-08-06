@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <title>аккордион</title>
+<body>
+
+<style>
+		#accordion {
+			margin: 10px 15%;
+		}
+		#accordion > h3 {
+			color: blue;
+			cursor: pointer;
+			margin: 5px 0;
+			padding: .5em .5em .5em .7em;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			border: 1px solid #c5c5c5;
+			background: #f6f6f6;
+			font-weight: normal;
+			color: #454545;
+		}
+		#accordion > h3.select {
+			border: 1px solid #003eff;
+			background: #007fff;
+			font-weight: normal;
+			color: #ffffff;
+		}
+		#accordion > div {
+			height: 0;
+			overflow: hidden;
+			color: #333;
+			padding-left: 15px;
+			padding-right: 15px;
+			transition: height .5s;
+		}
+		.tabs__text {
+			font: 12px Arial;
+			text-align: justify;
+		}
+	</style>
+<script>
+		var accordion = document.getElementById('accordion');
+		accordion.addEventListener('click', change);
+		function change(event) {
+			var targ = event.target;
+			if (targ.tagName !== 'H3') return; 
+			if (targ.classList.contains('select')) {
+				hideAll();
+			} else {
+				hideAll();
+				targ.classList.add('select');
+				showText(targ.nextElementSibling);
+			}
+		}
+		function hideAll() {
+			var h3El = accordion.querySelectorAll('h3');
+			var divEl = accordion.querySelectorAll('div');
+			for (var i = 0; i < h3El.length; i++) {
+				h3El[i].classList.remove('select');
+			}
+			for (var i = 0; i < divEl.length; i++) {
+				divEl[i].style.height = '0';
+			}
+		}
+		function showText(textEl) {
+			textEl.style.height = textEl.scrollHeight + 'px';
+		}
+	</script>
+</body> 
+</html>

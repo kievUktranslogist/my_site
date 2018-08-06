@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <title>Календарь</title>
+<body>
+	<style>
+		#calendar {
+			margin: 0 auto;
+			border: 1px solid #000;
+			width: 252px;
+			position: relative;
+			overflow: hidden;
+		}
+		#date {
+			margin: 10px;
+		}
+		.buttons {
+			position: absolute;
+			top: 8px;
+			right: 10px;
+		}
+         .button {
+            cursor: pointer;
+		-webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+         }
+		.day {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			margin: 2px;
+			padding: 0 1px;
+			border: 1px solid transparent;
+			margin-right: 11px;
+			text-align: center;
+			cursor: pointer;
+			transition: background .1s, color .1s;
+		}
+		.day:hover {
+			border: 1px solid #000!important;
+			color: #fff;
+			background: #000!important;
+		}
+		.day.today {
+			border: 1px solid #000!important;
+			color: #fff;
+			background: #000!important;
+		}
+		.day.other {
+			visibility: hidden;
+		}
+		.daysName {
+			background: #ddd;
+			border-bottom: 1px solid #999;
+			border-top: 1px solid #999;
+			margin-right: -9px;
+		}
+		#days {
+			margin-right: -9px;
+		}
+		.daysName div {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			padding: 0 1px;
+			margin: 3px;
+			margin-right: 8px;
+			font-size: 14px;
+			line-height: 20px;
+			cursor: pointer;
+		}
+	</style>	
+	<div id="calendar">
+		<div class="controls">
+			<div id="date">2018 Июль</div>
+			<div class="buttons">
+				<a class="button" id="prev"><</a>
+				<a class="button" id="next">></a>
+			</div>
+		</div>
+		<div class="daysName">
+			<div>Пн</div>
+			<div>Вт</div>
+			<div>Ср</div>
+			<div>Чт</div>
+			<div>Пт</div>
+			<div>Сб</div>
+			<div>Вс</div>
+		</div>
+		<div id="days"><div class="day other"></div>
+		<div class="day other"></div><div class="day other"></div>
+		<div class="day other"></div><div class="day other"></div><div class="day other"></div>
+		<div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div>
+		<div class="day">5</div><div class="day">6</div><div class="day">7</div><div class="day">8</div>
+		<div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div>
+		<div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div>
+		<div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div>
+		<div class="day">21</div><div class="day">22</div><div class="day">23</div><div class="day today">24</div>
+		<div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div>
+		<div class="day">29</div><div class="day">30</div><div class="day">31</div></div>
+	</div>
+	<script>
+		var daysEl = document.getElementById('days');
+		var dateEl = document.getElementById('date');
+		var prevEl = document.getElementById('prev');
+		var nextEl = document.getElementById('next');
+		var deferentMonth = 0;
+		var oneHour = 1000 * 60 * 60;
+		var oneDay = oneHour * 24;
+		var MONTHS = [
+			'Январь','Февраль','Март','Апрель', 
+			'Май','Июнь','Июль','Август',
+			'Сентябрь','Октябрь','Ноябрь','Декабрь'
+		];
+		create();
+		prevEl.addEventListener('click', prev);
+		nextEl.addEventListener('click', next);
+		function prev() {
+			deferentMonth--;
+			create();
+		}
+		function next() {
+			deferentMonth++;
+			create();
+		}
+		function create() {
+			var d = new Date();	
+			d.setMonth(d.getMonth() + deferentMonth);
+			var year = d.getFullYear();
+			var month = d.getMonth();
+			var dayCount = (new Date(year, month + 1, 0)).getDate();
+			var dayStart = (new Date(year, month, 1)).getDay();
+			if (dayStart === 0) {
+				dayStart = 7;
+			}
+			var today = null;
+			if (deferentMonth === 0) {
+				var today = d.getDate();
+			}
+			printDate(d);
+			generate(dayCount, today, dayStart);
+		}
+		function generate(count, today, start) {
+			var html = '';
+			for (var i = 1; i < start; i++) {
+				html += '<div class="day other"></div>';
+			}
+			for (var i = 1; i <= count; i++) {
+				var cl = 'day';
+				if (i === today) {
+					cl += ' today';
+				}
+				html += '<div class="' + cl + '">' + i + '</div>';
+			}
+			daysEl.innerHTML = html;
+		}
+		function printDate(d) {
+			dateEl.innerHTML = d.getFullYear() + ' ' 
+				+ MONTHS[d.getMonth()];
+		}
+	</script></body> </html>
